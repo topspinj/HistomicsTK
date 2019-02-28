@@ -23,8 +23,6 @@ except ImportError:
     sys.exit(1)
 
 
-# import numpy
-# from Cython.Build import cythonize
 from pkg_resources import parse_requirements, RequirementParseError
 
 with open('README.rst') as readme_file:
@@ -32,9 +30,6 @@ with open('README.rst') as readme_file:
 
 with open('HISTORY.rst') as history_file:
     history = history_file.read()
-
-with open('plugin.json') as f:
-    pkginfo = json.load(f)
 
 with open('LICENSE') as f:
     license_str = f.read()
@@ -56,8 +51,6 @@ test_requirements = [
 #    ext_compiler_args.append("-mmacosx-version-min=10.9")
 
 setup(name='histomicstk',
-      version=pkginfo['version'],
-      description=pkginfo['description'],
       long_description=readme + '\n\n' + history,
       author='Kitware, Inc.',
       author_email='developers@digitalslidearchive.net',
@@ -80,5 +73,5 @@ setup(name='histomicstk',
           'Topic :: Software Development :: Libraries :: Python Modules',
       ],
       test_suite='plugin_tests',
-      tests_require=test_requirements,
+      tests_require=test_requirements
 )
