@@ -31,7 +31,7 @@ TEST_DATA_DIR = 'sample_images/'
 class MacenkoTest(unittest.TestCase):
 
     def test_macenko(self):
-        im_path = os.path.join(TEST_DATA_DIR, 'hist_1.png')
+        im_path = os.path.join(TEST_DATA_DIR, 'hist_img.png')
         im = skimage.io.imread(im_path)[..., :3]
 
         w = htk_dcv.rgb_separate_stains_macenko_pca(im, 255)
@@ -46,7 +46,7 @@ class MacenkoTest(unittest.TestCase):
 class ColorDeconvolutionTest(unittest.TestCase):
 
     def test_roundtrip(self):
-        im_path = os.path.join(TEST_DATA_DIR, 'Easy1.png')
+        im_path = os.path.join(TEST_DATA_DIR, 'hist_img.png')
         im = skimage.io.imread(im_path)[..., :3]
 
         w = np.array([[0.650, 0.072, 0],
