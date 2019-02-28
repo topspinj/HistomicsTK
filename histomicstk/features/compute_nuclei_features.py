@@ -3,7 +3,6 @@ from skimage.measure import regionprops
 
 from .compute_fsd_features import compute_fsd_features
 from .compute_gradient_features import compute_gradient_features
-from .compute_haralick_features import compute_haralick_features
 from .compute_intensity_features import compute_intensity_features
 from .compute_morphometry_features import compute_morphometry_features
 
@@ -17,7 +16,7 @@ def compute_nuclei_features(im_label, im_nuclei, im_cytoplasm=None,
                             fsd_features_flag=True,
                             intensity_features_flag=True,
                             gradient_features_flag=True,
-                            haralick_features_flag=True
+                            haralick_features_flag=False
                             ):
     """
     Calculates features for nuclei classification
@@ -107,10 +106,7 @@ def compute_nuclei_features(im_label, im_nuclei, im_cytoplasm=None,
         Feature names are prefixed by *Nucleus.Gradient.* for nucleus features
         and *Cytoplasm.Gradient.* for cytoplasm features.
 
-    Haralick features for the nucleus and cytoplasm channels
-        See `histomicstk.features.compute_haralick_features` for more details.
-        Feature names are prefixed by *Nucleus.Haralick.* for nucleus features
-        and *Cytoplasm.Haralick.* for cytoplasm features.
+    Haralick features is not currently supported in this version of HistomicsTK.
 
     See Also
     --------
@@ -118,7 +114,6 @@ def compute_nuclei_features(im_label, im_nuclei, im_cytoplasm=None,
     histomicstk.features.compute_fsd_features,
     histomicstk.features.compute_intensity_features,
     histomicstk.features.compute_gradient_features,
-    histomicstk.features.compute_haralick_features
 
     """
 
@@ -191,31 +186,7 @@ def compute_nuclei_features(im_label, im_nuclei, im_cytoplasm=None,
 
     # compute nuclei haralick features
     if haralick_features_flag:
-
-        fharalick_nuclei = compute_haralick_features(
-            im_label, im_nuclei,
-            num_levels=num_glcm_levels,
-            rprops=nuclei_props
-        )
-
-        fharalick_nuclei.columns = ['Nucleus.' + col
-                                    for col in fharalick_nuclei.columns]
-
-        feature_list.append(fharalick_nuclei)
-
-    # compute cytoplasm haralick features
-    if haralick_features_flag and im_cytoplasm is not None:
-
-        fharalick_cytoplasm = compute_haralick_features(
-            cyto_mask, im_cytoplasm,
-            num_levels=num_glcm_levels,
-            rprops=cytoplasm_props
-        )
-
-        fharalick_cytoplasm.columns = ['Cytoplasm.' + col
-                                       for col in fharalick_cytoplasm.columns]
-
-        feature_list.append(fharalick_cytoplasm)
+        raise ValueError("haralick is not currently supported")
 
     # Merge all features
     fdata = pd.concat(feature_list, axis=1)

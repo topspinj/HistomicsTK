@@ -10,7 +10,6 @@ regions (e.g. tissues) found in histopathology images.
 from .compute_fsd_features import compute_fsd_features
 from .compute_global_cell_graph_features import compute_global_cell_graph_features
 from .compute_gradient_features import compute_gradient_features
-from .compute_haralick_features import compute_haralick_features
 from .compute_intensity_features import compute_intensity_features
 from .compute_morphometry_features import compute_morphometry_features
 from .graycomatrixext import graycomatrixext
@@ -24,7 +23,6 @@ __all__ = (
     'compute_fsd_features',
     'compute_global_cell_graph_features',
     'compute_gradient_features',
-    'compute_haralick_features',
     'compute_intensity_features',
     'compute_morphometry_features',
     'compute_nuclei_features',

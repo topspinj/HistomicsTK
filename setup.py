@@ -41,10 +41,6 @@ except RequirementParseError:
     raise
 requirements = [str(req) for req in ireqs]
 
-test_requirements = [
-    # TODO: Should we list Girder here?
-]
-
 # ext_compiler_args = ["-std=c++11", "-O2"]
 
 # if sys.platform == "darwin":  # osx
@@ -71,7 +67,5 @@ setup(name='histomicstk',
           'Programming Language :: Python :: 2',
           'Topic :: Scientific/Engineering :: Artificial Intelligence',
           'Topic :: Software Development :: Libraries :: Python Modules',
-      ],
-      test_suite='plugin_tests',
-      tests_require=test_requirements
+      ]
 )
