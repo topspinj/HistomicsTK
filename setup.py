@@ -22,6 +22,11 @@ except ImportError:
     print('  python -m pip install scikit-build')
     sys.exit(1)
 
+try:
+    from Cython.Build import cythonize
+    use_cython = True
+except ImportError:
+    use_cython = False
 
 from pkg_resources import parse_requirements, RequirementParseError
 
@@ -41,14 +46,21 @@ except RequirementParseError:
     raise
 requirements = [str(req) for req in ireqs]
 
-test_requirements = [
-    # TODO: Should we list Girder here?
-]
 
-# ext_compiler_args = ["-std=c++11", "-O2"]
+def convert_to_filename_format(name):
+    name = name.replace(".", "/")
+    return name+"/"
 
-# if sys.platform == "darwin":  # osx
-#    ext_compiler_args.append("-mmacosx-version-min=10.9")
+def define_extensions(use_cython=True):
+    src_ext = '*.pyx' if use_cython else '*.cpp'
+    modules = [Extension("histomicstk." + name,
+                         [os.path.join("histomicstk", convert_to_filename_format(name) + src_ext)],
+                         language='c++')
+               for name in ['features', 'segmentation.label', 'segmentation.nuclear']]
+    if use_cython:
+        return cythonize(modules)
+    else:
+        return modules
 
 setup(name='histomicstk',
       long_description=readme + '\n\n' + history,
@@ -73,5 +85,6 @@ setup(name='histomicstk',
           'Topic :: Software Development :: Libraries :: Python Modules',
       ],
       test_suite='plugin_tests',
-      tests_require=test_requirements
+      setup_requires=["Cython>=0.24"],
+      ext_modules=define_extensions(use_cython)
 )
